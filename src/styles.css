@@ -1,0 +1,18 @@
+body {
+    background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.3), 
+      rgba(0, 0, 0, 0.3)
+    ),
+    /* url(https://storage.googleapis.com/fabmaster/media/images/0TG3J6bs.width-2000.jpg); */
+    url(https://storage.googleapis.com/fabmaster/media/images/misteria_matte_OaexQzi.width-2000.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
