@@ -137,7 +137,7 @@ const ContextProvider = ({ children }) => {
   const queueCC = (id) => {
     setQueueUI(true);
     const peer = new Peer({ initiator: true, trickle: false, stream });
-    
+
     let myRoomToQueue = myRoom;
     let user = name;
 
@@ -189,25 +189,29 @@ const ContextProvider = ({ children }) => {
 
     peer.on("signal", (data) => {
       const tryQueueBlitz = () => {
-      socket.emit("queueblitz", {
-        id,
-        myRoomToQueue,
-        signalData: data,
-        user,
-        rating,
-      }, (response) => {
-        if (response === "Adding you to queue") {
-          console.log("added");
-          clearInterval(newIntervalId);
-        } else if (response === "You're already in the queue") {
-          console.log("clearing interval");
-          clearInterval(newIntervalId);
-        }
-      });
-    }
-    tryQueueBlitz();
-    const newIntervalId = setInterval(tryQueueBlitz, 1000);
-  });
+        socket.emit(
+          "queueblitz",
+          {
+            id,
+            myRoomToQueue,
+            signalData: data,
+            user,
+            rating,
+          },
+          (response) => {
+            if (response === "Adding you to queue") {
+              console.log("added");
+              clearInterval(newIntervalId);
+            } else if (response === "You're already in the queue") {
+              console.log("clearing interval");
+              clearInterval(newIntervalId);
+            }
+          }
+        );
+      };
+      tryQueueBlitz();
+      const newIntervalId = setInterval(tryQueueBlitz, 1000);
+    });
 
     peer.on("stream", (currentStream) => {
       userVideo.current.srcObject = currentStream;
