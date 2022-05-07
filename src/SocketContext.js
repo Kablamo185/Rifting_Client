@@ -4,7 +4,8 @@ import Peer from "simple-peer";
 
 const SocketContext = createContext();
 
-const socket = io("https://dymenxion-webcam-chat.herokuapp.com/");
+//const socket = io("https://dymenxion-webcam-chat.herokuapp.com/");
+const socket = io("http://localhost:5001");
 
 const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
@@ -139,14 +140,28 @@ const ContextProvider = ({ children }) => {
     //console.log(myRoom)
     let myRoomToQueue = myRoom;
     let user = name;
+
     peer.on("signal", (data) => {
+      const tryQueueCC = () => {
       socket.emit("queuecc", {
         id,
         myRoomToQueue,
         signalData: data,
         user,
         rating,
+      }, (response) =>{
+        if (response === "Adding you to queue") {
+          console.log("added")
+          clearInterval(newIntervalId)
+        } else if (response === "You're already in the queue") {
+          console.log("clearing interval")
+          clearInterval(newIntervalId)
+        }
+        
       });
+    }
+      tryQueueCC()
+      const newIntervalId = setInterval(tryQueueCC, 1000)
     });
 
     peer.on("stream", (currentStream) => {
