@@ -4,7 +4,8 @@ import Peer from "simple-peer";
 
 const SocketContext = createContext();
 
-const socket = io("https://dymenxion-webcam-chat.herokuapp.com/");
+//const socket = io("https://dymenxion-webcam-chat.herokuapp.com/");
+const socket = io("http://localhost:5001");
 
 const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
@@ -22,10 +23,10 @@ const ContextProvider = ({ children }) => {
   const [oppName, setOppName] = useState("Opponent");
   const [rating, setRating] = useState(1500);
   const [users, setUsers] = useState(0);
-  const [email, setEmail] = useState("")
-  const [message, setMessage] = useState("")
-  const [rotate, setRotate] = useState(false)
-  const [oppRotate, setOppRotate] = useState(false)
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [rotate, setRotate] = useState(false);
+  const [oppRotate, setOppRotate] = useState(false);
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -44,7 +45,7 @@ const ContextProvider = ({ children }) => {
 
     socket.on("calluser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivedCall: true, from, name: callerName, signal });
-      setOppID(from)
+      setOppID(from);
     });
   }, []);
 
@@ -103,7 +104,7 @@ const ContextProvider = ({ children }) => {
 
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
-    setOppID(id)
+    setOppID(id);
 
     peer.on("signal", (data) => {
       socket.emit("calluser", {
@@ -136,17 +137,34 @@ const ContextProvider = ({ children }) => {
   const queueCC = (id) => {
     setQueueUI(true);
     const peer = new Peer({ initiator: true, trickle: false, stream });
-    //console.log(myRoom)
+    
     let myRoomToQueue = myRoom;
     let user = name;
+
     peer.on("signal", (data) => {
-      socket.emit("queuecc", {
-        id,
-        myRoomToQueue,
-        signalData: data,
-        user,
-        rating,
-      });
+      const tryQueueCC = () => {
+        socket.emit(
+          "queuecc",
+          {
+            id,
+            myRoomToQueue,
+            signalData: data,
+            user,
+            rating,
+          },
+          (response) => {
+            if (response === "Adding you to queue") {
+              console.log("added");
+              clearInterval(newIntervalId);
+            } else if (response === "You're already in the queue") {
+              console.log("clearing interval");
+              clearInterval(newIntervalId);
+            }
+          }
+        );
+      };
+      tryQueueCC();
+      const newIntervalId = setInterval(tryQueueCC, 1000);
     });
 
     peer.on("stream", (currentStream) => {
@@ -168,16 +186,28 @@ const ContextProvider = ({ children }) => {
 
     let myRoomToQueue = myRoom;
     let user = name;
-    
+
     peer.on("signal", (data) => {
+      const tryQueueBlitz = () => {
       socket.emit("queueblitz", {
         id,
         myRoomToQueue,
         signalData: data,
         user,
         rating,
+      }, (response) => {
+        if (response === "Adding you to queue") {
+          console.log("added");
+          clearInterval(newIntervalId);
+        } else if (response === "You're already in the queue") {
+          console.log("clearing interval");
+          clearInterval(newIntervalId);
+        }
       });
-    });
+    }
+    tryQueueBlitz();
+    const newIntervalId = setInterval(tryQueueBlitz, 1000);
+  });
 
     peer.on("stream", (currentStream) => {
       userVideo.current.srcObject = currentStream;
@@ -253,7 +283,7 @@ const ContextProvider = ({ children }) => {
         rotate,
         setRotate,
         oppRotate,
-        setOppRotate
+        setOppRotate,
       }}
     >
       {children}

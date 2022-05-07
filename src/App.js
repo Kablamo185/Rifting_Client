@@ -7,6 +7,7 @@ import Notifications from "./components/Notifications";
 import QueueUI from "./components/QueueUI";
 import NavBar from "./components/NavBar";
 
+import HomePage from "./HomePage";
 import Classic from "./Classic";
 import Blitz from "./Blitz";
 import BugReport from "./BugReport";
@@ -34,7 +35,8 @@ const App = () => {
           <Notifications />
         </NavBar>
         <Routes>
-          <Route exact path="/" element={<Classic />} />
+          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/classic" element={<Classic />} />
           <Route exact path="/blitz" element={<Blitz />} />
           <Route exact path="/contact" element={<BugReport />} />
         </Routes>

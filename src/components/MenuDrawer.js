@@ -67,7 +67,7 @@ const TemporaryDrawer = () => {
           button
           key="classic"
           className={classes.text}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/classic")}
         >
           <ListItemIcon>
             <FontAwesomeIcon icon={faDragon} className={classes.text}/>

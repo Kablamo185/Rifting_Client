@@ -21,15 +21,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
-    width: "550px",
-    margin: "35px 0",
+    width: "275px",
+    margin: "25px 0",
     padding: 0,
-    [theme.breakpoints.down("xs")]: {
-      width: "80%",
-    },
   },
   margin: {
-    marginTop: 20,
+    marginTop: 10,
   },
   padding: {
     padding: 20,
