@@ -15,17 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
   gridContainer: {
     width: "100%",
-    [theme.breakpoints.down("xs")]: {
-      flexDirection: "column",
-    },
   },
   container: {
     width: "275px",
     margin: "25px 0",
     padding: 0,
-  },
-  margin: {
-    marginTop: 10,
   },
   padding: {
     padding: 20,
@@ -40,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BlitzQueue = ({ children }) => {
+const BlitzQueue = () => {
   const { me, queueBlitz, checkServerQueue, setLifeTotal } =
     useContext(SocketContext);
   const classes = useStyles();
@@ -95,7 +89,6 @@ const BlitzQueue = ({ children }) => {
             </Grid>
           </Grid>
         </form>
-        {children}
       </Paper>
     </Container>
   );

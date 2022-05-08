@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ReactDom from "react-dom";
 
 import { Button, Grid, Typography, Container, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPersonRunning, faGamepad } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonRunning, faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 import { SocketContext } from "../SocketContext";
 
@@ -23,21 +23,14 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1000,
   },
   gridContainer: {
-    //width: "100%",
     alignContent: "center",
-    [theme.breakpoints.down("xs")]: {
-      flexDirection: "column",
-    },
     width: "600px",
-    height: "200px",
+    height: "250px",
   },
   container: {
     width: "500px",
     margin: "35px 0",
     padding: 0,
-    [theme.breakpoints.down("xs")]: {
-      width: "80%",
-    },
     color: "white",
   },
   margin: {
@@ -48,11 +41,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
   },
   text: {
-    marginLeft: 70,
+    marginRight: 140,
     color: "white",
+    textAlign: "center",
   },
   paper: {
-    marginTop: 300,
+    marginTop: 250,
     padding: "10px 20px",
     border: "2px solid black",
     backgroundColor: "#23272a",
@@ -64,6 +58,14 @@ const QueueUI = () => {
     useContext(SocketContext);
   const classes = useStyles();
 
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
+  }, []);
+
   return ReactDom.createPortal(
     <div className={classes.root}>
       <Container className={classes.container}>
@@ -74,18 +76,21 @@ const QueueUI = () => {
                 noWrap
                 className={classes.text}
                 gutterBottom
-                variant="h5"
+                variant="h4"
               >
                 You're now in the Queue!
               </Typography>
-              <Typography gutterBottom className={classes.text} variant="h6">
+              <Typography gutterBottom className={classes.text} variant="h5">
                 A match will be found shortly.
+              </Typography>
+              <Typography gutterBottom className={classes.text} variant="h6">
+                You have been in the queue for {count} seconds.
               </Typography>
               {call.isReceivedCall && !callAccepted ? (
                 <Button
                   variant="contained"
                   color="secondary"
-                  startIcon={<FontAwesomeIcon icon={faGamepad}/>}
+                  startIcon={<FontAwesomeIcon icon={faGamepad} />}
                   size="large"
                   onClick={answerCall}
                   className={classes.margin}
@@ -96,7 +101,7 @@ const QueueUI = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  startIcon={<FontAwesomeIcon icon={faPersonRunning}/>}
+                  startIcon={<FontAwesomeIcon icon={faPersonRunning} />}
                   size="large"
                   onClick={leaveQueue}
                   className={classes.margin}

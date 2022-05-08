@@ -37,18 +37,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "75px 0",
     color: "white",
   },
-  margin: {
-    marginTop: 20,
-    marginLeft: 80,
-  },
   padding: {
-    padding: 100,
+    padding: 50,
+  },
+  titleText: {
+    color: "white",
+    marginRight: 40,
   },
   text: {
-    color: "white",
+    color: "#99aab5",
+    marginRight: 40,
+  },
+  button: {
+    marginTop: 40,
+    marginLeft: 120,
   },
   paper: {
-    //padding: "10px 20px",
     border: "2px solid black",
     backgroundColor: "#23272a",
   },
@@ -66,24 +70,30 @@ const HomePage = () => {
             <Grid item xs={12} md={12} className={classes.padding}>
               <Typography
                 noWrap
-                className={classes.text}
+                className={classes.titleText}
                 gutterBottom
-                variant="h5"
+                variant="h4"
               >
                 Welcome to Rifting.io
               </Typography>
               <br />
-              <Typography gutterBottom className={classes.text} variant="h6">
-                Rifting is your key to other worlds.
+              <Typography gutterBottom className={classes.titleText} variant="h5">
+                Rifting is your portal to other worlds.
               </Typography>
               <br />
               <Typography className={classes.text}>
                 This is an early access version, as such you may run into several bugs.
-                
+              </Typography>
+              <br />
+              <Typography className={classes.text}>
                 It is possible that your connection blocks the webRTC protocol. The best way to test This
                 is to create a game with yourself by clicking "copy your ID" and pasting it into the create game field.
-                If you can see yourself it means that your connection is fine. If you cannot see yourself then try disabling
-                your browser extensions OR running your browser in incognito mode OR try using a secondary browser with no extensions installed.
+                If you can see yourself it means that your connection is fine.
+              </Typography>
+              <br />
+              <Typography className={classes.text}>
+                If you cannot see yourself then try disabling your browser extensions OR running your browser 
+                in incognito mode OR try using a secondary browser with no extensions installed.
               </Typography>
               <br />
               <Typography className={classes.text}>
@@ -95,7 +105,7 @@ const HomePage = () => {
                   startIcon={<FontAwesomeIcon icon={faPersonRunning}/>}
                   size="large"
                   onClick={() => navigate("/classic")}
-                  className={classes.margin}
+                  className={classes.button}
                 >
                   Enter Rifting
                 </Button>

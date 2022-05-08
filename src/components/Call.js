@@ -19,16 +19,10 @@ const useStyles = makeStyles((theme) => ({
   gridContainer: {
     width: "100%",
     containerSpacing: 0.5,
-    [theme.breakpoints.down("xs")]: {
-      flexDirection: "row",
-    },
   },
   container: {
     margin: "0px 0px",
     padding: 0,
-    [theme.breakpoints.down("xs")]: {
-      width: "80%",
-    },
   },
   margin: {
     marginTop: 10,
@@ -55,7 +49,7 @@ const Call = ({ children }) => {
   const classes = useStyles();
   return (
     <Container className={classes.container}>
-      <form className={classes.root} noValidate autoComplete="off">
+      <form noValidate autoComplete="off">
         <Grid container className={classes.gridContainer}>
           <Grid
             className={classes.padding}
