@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import VideoPlayer from "./components/VideoPlayer";
+import StreamVideoPlayer from "./components/StreamerVideoPlayer";
 import BlitzQueue from "./components/BlitzQueue";
 import StreamLifeTracker from "./components/streamLifeTracker";
 
@@ -23,7 +24,7 @@ const StreamBlitz = () => {
   return (
     <div className={classes.wrapper}>
         <StreamLifeTracker/>
-        <VideoPlayer />
+        <StreamVideoPlayer />
         {!callAccepted && <BlitzQueue />}
     </div>
   );
