@@ -11,6 +11,8 @@ import HomePage from "./HomePage";
 import Classic from "./Classic";
 import Blitz from "./Blitz";
 import BugReport from "./BugReport";
+import StreamClassic from "./Streamer_Classic";
+import StreamBlitz from "./Streamer_Blitz";
 
 import { SocketContext } from "./SocketContext";
 
@@ -39,6 +41,8 @@ const App = () => {
           <Route exact path="/classic" element={<Classic />} />
           <Route exact path="/blitz" element={<Blitz />} />
           <Route exact path="/contact" element={<BugReport />} />
+          <Route exact path="/stream-classic" element={<StreamClassic />} />
+          <Route exact path="/stream-blitz" element={<StreamBlitz />} />
         </Routes>
       </div>
     </Router>

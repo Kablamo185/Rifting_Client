@@ -91,6 +91,37 @@ const TemporaryDrawer = () => {
       </List>
       <Divider />
       <List>
+        <ListItem key="FAB" className={classes.text}>
+          <ListItemText primary="FAB Content Creators" />
+        </ListItem>
+        <ListItem
+          button
+          key="stream classic"
+          className={classes.text}
+          onClick={() => navigate("/stream-classic")}
+        >
+          <ListItemIcon>
+            <FontAwesomeIcon icon={faDragon} className={classes.text}/>
+          </ListItemIcon>
+          <ListItemText
+            primary="Stream CC"
+            className={classes.text}
+          />
+        </ListItem>
+        <ListItem
+          button
+          key="Stream blitz"
+          className={classes.text}
+          onClick={() => navigate("/stream-blitz")}
+        >
+          <ListItemIcon>
+            <FontAwesomeIcon icon={faHatWizard} className={classes.text}/>
+          </ListItemIcon>
+          <ListItemText primary="Stream Blitz" />
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
         <ListItem
           button
           key="contact"

@@ -18,6 +18,7 @@ import { SocketContext } from "../SocketContext";
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
     width: "100%",
+    height: "50%",
     containerSpacing: 0.5,
   },
   container: {
@@ -31,13 +32,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 5,
     marginLeft: 10,
   },
-  paper: {
-    padding: "10px 20px",
-    border: "2px solid black",
-    backgroundColor: "#23272a",
-  },
   text: {
     color: "#99aab5",
+    marginBottom: -5,
   },
 }));
 
