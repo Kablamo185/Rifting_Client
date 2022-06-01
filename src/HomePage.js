@@ -23,34 +23,25 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0,0,0,.8)",
     zIndex: 1000,
   },
-  gridContainer: {
-    alignContent: "center",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "75vh",
-    height: "75vh",
-  },
   container: {
-    width: "75vh",
-    height: "75vh",
-    margin: "75px 0",
+    width: "650px",
+    height: "600px",
     color: "white",
+    marginTop: "75px",
   },
   padding: {
     padding: 50,
   },
   titleText: {
     color: "white",
-    marginRight: 40,
   },
   text: {
     color: "#99aab5",
-    marginRight: 40,
+    fontSize: "1rem",
   },
   button: {
     marginTop: 40,
-    marginLeft: 120,
+    marginLeft: 150,
   },
   paper: {
     border: "2px solid black",
