@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 
-import VideoPlayer from "./components/VideoPlayer";
 import StreamVideoPlayer from "./components/StreamerVideoPlayer";
 import Options from "./components/Options";
 import StreamLifeTracker from "./components/streamLifeTracker";
