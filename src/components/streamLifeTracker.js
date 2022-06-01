@@ -68,13 +68,13 @@ const StreamLifeTracker = () => {
         }}
       >
         <Typography className="counter__output" style={{color: "#99aab5"}} variant="h4" align="left">
-          {oppLifeTotal}
+        {lifeTotal}
         </Typography>
         <Typography className="counter__output" style={{color: "#99aab5"}} variant="h6" align="left">
             VS
         </Typography>
         <Typography className="counter__output" style={{color: "#99aab5"}} variant="h4" align="left">
-          {lifeTotal}
+          {oppLifeTotal}
         </Typography>
         </Grid>
         <Grid
