@@ -27,6 +27,7 @@ const ContextProvider = ({ children }) => {
   const [message, setMessage] = useState("");
   const [rotate, setRotate] = useState(false);
   const [oppRotate, setOppRotate] = useState(false);
+  const [token, setToken] = useState({});
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -41,7 +42,14 @@ const ContextProvider = ({ children }) => {
     //     myVideo.current.srcObject = currentStream;
     //   });
 
-    socket.on("me", (id) => setMe(id));
+    socket.on("me", (id) => {
+      setMe(id)
+      socket.emit('token' );
+    });
+
+    socket.on("token", (response) => {
+      setToken(response)
+    });
 
     socket.on("calluser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivedCall: true, from, name: callerName, signal });
@@ -87,7 +95,8 @@ const ContextProvider = ({ children }) => {
     setQueueUI(false);
     setJoinGame(true);
 
-    const peer = new Peer({ initiator: false, trickle: false, stream });
+    const peer = new Peer({ initiator: false, trickle: true, iceServers: token.iceServers, stream });
+    console.log("We have gathered the ice candidates:")
 
     peer.on("signal", (data) => {
       socket.emit("answercall", { signal: data, to: call.from });
@@ -102,8 +111,12 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
 
+  //Appears that when direct calling you cannot trickle your ICE Candidates???
   const callUser = (id) => {
-    const peer = new Peer({ initiator: true, trickle: false, stream });
+
+    console.log(token.iceServers)
+
+    const peer = new Peer({ initiator: true, trickle: false, iceServers: token.iceServers, stream });
     setOppID(id);
 
     peer.on("signal", (data) => {
@@ -136,10 +149,13 @@ const ContextProvider = ({ children }) => {
 
   const queueCC = (id) => {
     setQueueUI(true);
-    const peer = new Peer({ initiator: true, trickle: false, stream });
+    const peer = new Peer({ initiator: true, trickle: true, iceServers: token.iceServers, stream });
 
     let myRoomToQueue = myRoom;
     let user = name;
+
+    console.log(peer)
+
 
     peer.on("signal", (data) => {
       const tryQueueCC = () => {
@@ -165,6 +181,8 @@ const ContextProvider = ({ children }) => {
       };
       tryQueueCC();
       const newIntervalId = setInterval(tryQueueCC, 1000);
+      console.log("The Peer Signal Is:")
+      console.log(data)
     });
 
     peer.on("stream", (currentStream) => {
@@ -182,7 +200,7 @@ const ContextProvider = ({ children }) => {
 
   const queueBlitz = (id) => {
     setQueueUI(true);
-    const peer = new Peer({ initiator: true, trickle: false, stream });
+    const peer = new Peer({ initiator: true, trickle: true, iceServers: token.iceServers, stream });
 
     let myRoomToQueue = myRoom;
     let user = name;
