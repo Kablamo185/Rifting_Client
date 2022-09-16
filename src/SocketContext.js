@@ -95,8 +95,9 @@ const ContextProvider = ({ children }) => {
     setQueueUI(false);
     setJoinGame(true);
 
-    const peer = new Peer({ initiator: false, trickle: true, iceServers: token.iceServers, stream });
-    console.log("We have gathered the ice candidates:")
+    const peer = new Peer({ initiator: false, trickle: true, stream });
+    // console.log("Our new Peer is:")
+    // console.log(peer)
 
     peer.on("signal", (data) => {
       socket.emit("answercall", { signal: data, to: call.from });
@@ -114,9 +115,9 @@ const ContextProvider = ({ children }) => {
   //Appears that when direct calling you cannot trickle your ICE Candidates???
   const callUser = (id) => {
 
-    console.log(token.iceServers)
+    //console.log(token.iceServers)
 
-    const peer = new Peer({ initiator: true, trickle: false, iceServers: token.iceServers, stream });
+    const peer = new Peer({ initiator: true, trickle: false, stream });
     setOppID(id);
 
     peer.on("signal", (data) => {
@@ -149,12 +150,13 @@ const ContextProvider = ({ children }) => {
 
   const queueCC = (id) => {
     setQueueUI(true);
-    const peer = new Peer({ initiator: true, trickle: true, iceServers: token.iceServers, stream });
-
+    const peer = new Peer({ initiator: true, trickle: true, stream });
+    // console.log("This is the peer info:")
+    // console.log(peer)
     let myRoomToQueue = myRoom;
     let user = name;
 
-    console.log(peer)
+    //console.log(peer)
 
 
     peer.on("signal", (data) => {
@@ -170,19 +172,19 @@ const ContextProvider = ({ children }) => {
           },
           (response) => {
             if (response === "Adding you to queue") {
-              console.log("added");
+              //console.log("added");
               clearInterval(newIntervalId);
             } else if (response === "You're already in the queue") {
-              console.log("clearing interval");
+              //console.log("clearing interval");
               clearInterval(newIntervalId);
+            } else {
+              //console.log("The interval goes on.")
             }
           }
         );
       };
       tryQueueCC();
       const newIntervalId = setInterval(tryQueueCC, 1000);
-      console.log("The Peer Signal Is:")
-      console.log(data)
     });
 
     peer.on("stream", (currentStream) => {
